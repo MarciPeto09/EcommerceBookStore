@@ -9,19 +9,23 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public void addAuthor(AuthorEntity author){
+    public void addAuthor(AuthorEntity author) {
         authorRepository.addAuthor(author);
     }
 
-    public void removeAuthor(UUID id){
+    public void removeAuthor(UUID id) {
         authorRepository.removeAuthor(id);
     }
 
-    public AuthorEntity findById(UUID id){
+    public AuthorEntity findById(UUID id) {
         return authorRepository.findById(id);
     }
 
-    public List<AuthorEntity> findAll(){
+    public List<AuthorEntity> findAll() {
         return authorRepository.findAll();
+    }
+
+    public void upDatedAuthor(UUID id, AuthorEntity author){
+        authorRepository.updateAuthor(id, author);
     }
 }

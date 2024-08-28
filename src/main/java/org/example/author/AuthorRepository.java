@@ -85,6 +85,31 @@ public class AuthorRepository {
 
         }
 
+    }
 
+    public void updateAuthor(UUID id, AuthorEntity updatedAuthor) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            AuthorEntity existingAuthor = session.get(AuthorEntity.class, id);
+            if (existingAuthor != null) {
+                existingAuthor.setName(updatedAuthor.getName());
+                existingAuthor.setSurname(updatedAuthor.getSurname());
+                existingAuthor.setNationality(updatedAuthor.getNationality());
+                existingAuthor.setBirthday(updatedAuthor.getBirthday());
+                existingAuthor.setListOfBookXAuthor(updatedAuthor.getListOfBookXAuthor());
+                session.update(existingAuthor);
+                transaction.commit();
+            } else {
+                transaction.rollback();
+                throw new RuntimeException("Author not found with id: " + id);
+            }
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            throw e;
+        }
     }
 }
