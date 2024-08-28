@@ -49,37 +49,25 @@ public class AuthorRepository {
     }
 
     public AuthorEntity findById(UUID id) {
-        Transaction transaction = null;
+        AuthorEntity author = null;
         try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            AuthorEntity author = session.createQuery("Select s From AuthorEntity s where id = :id", AuthorEntity.class)
+            author = session.createQuery("Select s From AuthorEntity s where id = :id", AuthorEntity.class)
                     .setParameter("id", id)
                     .getSingleResult();
-            transaction.commit();
-            return author;
+
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
-            throw e;
         }
+        return author;
     }
 
 
     public List<AuthorEntity> findAll() {
-        Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
             List<AuthorEntity> list = session.createQuery("Select s From AuthorEntity s", AuthorEntity.class)
                     .getResultList();
-            transaction.commit();
             return list;
         } catch (Exception e) {
-
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
             throw e;
 
