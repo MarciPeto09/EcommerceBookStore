@@ -16,26 +16,36 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "book")
-@ToString(exclude = {"authors", "category"})
+@ToString
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private int id;
 
     private String title;
 
     private double price;
 
+    @ToString.Exclude
     @ManyToMany(mappedBy = "listOfBookXAuthor",cascade = CascadeType.ALL, fetch = FetchType.EAGER )
     private List<AuthorEntity> listOfAuthorsXBook;
 
+
+    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER )
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
-
+    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER )
     @JoinColumn(name = "book")
     private OrderEntity order;
 
+    public BookEntity(String title, double price, List<AuthorEntity> listOfAuthorsXBook, CategoryEntity category, OrderEntity order) {
+        this.title = title;
+        this.price = price;
+        this.listOfAuthorsXBook = listOfAuthorsXBook;
+        this.category = category;
+        this.order = order;
+    }
 }

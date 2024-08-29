@@ -13,11 +13,11 @@ public class AuthorService {
         authorRepository.addAuthor(author);
     }
 
-    public void removeAuthor(UUID id) {
+    public void removeAuthor(int id) {
         authorRepository.removeAuthor(id);
     }
 
-    public AuthorEntity findById(UUID id) {
+    public AuthorEntity findById(int id) {
         return authorRepository.findById(id);
     }
 
@@ -25,7 +25,7 @@ public class AuthorService {
         return authorRepository.findAll();
     }
 
-    public void upDatedAuthor(UUID id, AuthorEntity author){
+    public void upDatedAuthor(int id, AuthorEntity author) {
         authorRepository.updateAuthor(id, author);
     }
 }

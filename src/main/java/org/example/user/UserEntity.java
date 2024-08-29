@@ -19,7 +19,7 @@ import java.util.UUID;
 public class UserEntity {
     @Id
     @GeneratedValue
-    private UUID id;
+    private int id;
 
     private String name;
 
@@ -35,4 +35,13 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderEntity> orders;
 
+
+    public UserEntity(String name, String surname, String email, String password, LocalDate dateOfRegistration, List<OrderEntity> orders) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.dateOfRegistration = dateOfRegistration;
+        this.orders = orders;
+    }
 }

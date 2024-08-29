@@ -1,6 +1,7 @@
 package org.example.order;
 
 import org.example.category.CategoryEntity;
+import org.example.utilities.DbConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,13 +10,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class OrderRepository {
-    private SessionFactory sessionFactory;
-
-    public OrderRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     public void addOrder(OrderEntity order) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -31,7 +28,8 @@ public class OrderRepository {
     }
 
 
-    public void removeOrder(UUID id) {
+    public void removeOrder(int id) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -49,7 +47,8 @@ public class OrderRepository {
     }
 
 
-    public OrderEntity findById(UUID id) {
+    public OrderEntity findById(int id) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         OrderEntity order = null;
         try (Session session = sessionFactory.openSession()) {
             order = session.createQuery("Select s From CategoryEntity s  where id = :id", OrderEntity.class)
@@ -63,6 +62,7 @@ public class OrderRepository {
 
 
     public List<OrderEntity> findAll() {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         List<OrderEntity> list = null;
         try (Session session = sessionFactory.openSession()) {
             list = session.createQuery("Select s From CategoryEntity s", OrderEntity.class)
@@ -73,7 +73,8 @@ public class OrderRepository {
         return list;
     }
 
-    public void upDate(UUID id, OrderEntity order) {
+    public void upDate(int id, OrderEntity order) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         OrderEntity existingOrder = null;
         try (Session session = sessionFactory.openSession()) {

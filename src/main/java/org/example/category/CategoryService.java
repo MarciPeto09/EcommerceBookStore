@@ -15,11 +15,11 @@ public class CategoryService {
         categoryRepository.addCategory(category);
     }
 
-    public void removeCategory(UUID id){
+    public void removeCategory(int id){
         categoryRepository.removeCategory(id);
     }
 
-    public CategoryEntity findById(UUID id){
+    public CategoryEntity findById(int id){
         return categoryRepository.findById(id);
     }
 
@@ -27,7 +27,7 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public void upDate(UUID id, CategoryEntity category){
+    public void upDate(int id, CategoryEntity category){
          categoryRepository.upDate(id, category);
     }
 }

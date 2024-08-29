@@ -12,15 +12,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString(exclude = {"book", "category"})
-
+@ToString(exclude = {"book", "user","orders","category","author_book"})
 @Entity
 @Table(name = "author")
 public class AuthorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private int id;
 
     private String name;
 
@@ -38,4 +36,12 @@ public class AuthorEntity {
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
     private List<BookEntity> listOfBookXAuthor;
+
+    public AuthorEntity(String name, String surname, AuthorNationality nationality, LocalDate birthday, List<BookEntity> listOfBookXAuthor) {
+        this.name = name;
+        this.surname = surname;
+        this.nationality = nationality;
+        this.birthday = birthday;
+        this.listOfBookXAuthor = listOfBookXAuthor;
+    }
 }

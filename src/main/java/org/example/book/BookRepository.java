@@ -1,6 +1,7 @@
 package org.example.book;
 
 import org.example.author.AuthorEntity;
+import org.example.utilities.DbConnection;
 import org.hibernate.*;
 import org.hibernate.Transaction;
 
@@ -9,13 +10,8 @@ import java.util.UUID;
 
 public class BookRepository {
 
-    private SessionFactory sessionFactory;
-
-    public BookRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
     public void addBook(BookEntity book){
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try(Session session = sessionFactory.openSession()){
             transaction = session.beginTransaction();
@@ -29,14 +25,15 @@ public class BookRepository {
         }
     }
 
-    public void removeBook(UUID id) {
+    public void removeBook(int id) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            AuthorEntity author = session.createQuery("Select s From AuthorEntity s where id =:id", AuthorEntity.class)
+            BookEntity book = session.createQuery("Select s From BookEntity s where id =:id", BookEntity.class)
                     .setParameter("id", id)
                     .getSingleResult();
-            session.delete(author);
+            session.delete(book);
             transaction.commit();
         }catch (Exception e){
             if(transaction != null){
@@ -46,7 +43,8 @@ public class BookRepository {
         }
     }
 
-    public BookEntity findById(UUID id){
+    public BookEntity findById(int id){
+        SessionFactory sessionFactory = DbConnection.getFactory();
         BookEntity book = null;
         try(Session session = sessionFactory.openSession()){
              book = session.createQuery("Select s From BookEntity s where id =:id", BookEntity.class)
@@ -59,7 +57,24 @@ public class BookRepository {
         return book;
     }
 
+
+    public BookEntity findByName(String title){
+        SessionFactory sessionFactory = DbConnection.getFactory();
+        BookEntity book = null;
+        try(Session session = sessionFactory.openSession()){
+            book = session.createQuery("Select s From BookEntity s where s.title =:title", BookEntity.class)
+                    .setParameter("title", title.trim() )
+                    .getSingleResult();
+
+        }catch(Exception e ){
+            e.printStackTrace();
+        }
+        return book;
+    }
+
+
     public List<BookEntity> findAll(){
+        SessionFactory sessionFactory = DbConnection.getFactory();
         List<BookEntity> lista = null;
         try(Session session = sessionFactory.openSession()){
             lista = session.createQuery("Select s From BookEntity s",BookEntity.class).getResultList();
@@ -71,7 +86,8 @@ public class BookRepository {
     }
 
 
-    public void updateBook(UUID id,BookEntity book){
+    public void updateBook(int id,BookEntity book){
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         BookEntity existingBook = null;
         try(Session session = sessionFactory.openSession()){

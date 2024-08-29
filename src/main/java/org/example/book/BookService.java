@@ -16,19 +16,23 @@ public class BookService {
         bookRepository.addBook(book);
     }
 
-    public void removeBook(UUID id){
+    public void removeBook(int id){
         bookRepository.removeBook(id);
     }
 
-    public BookEntity findById(UUID id){
+    public BookEntity findById(int id){
         return bookRepository.findById(id);
+    }
+
+    public BookEntity findByName(String name){
+        return bookRepository.findByName(name);
     }
 
     public List<BookEntity> findAll(){
         return bookRepository.findAll();
     }
 
-    public void upDate(UUID id, BookEntity book){
+    public void upDate(int id, BookEntity book){
         bookRepository.updateBook(id, book);
     }
 }

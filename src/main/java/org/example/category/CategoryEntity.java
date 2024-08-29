@@ -17,10 +17,24 @@ import java.util.UUID;
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private int id;
 
     private String categoryType;
 
     @OneToMany(mappedBy = "category")
     private List<BookEntity> booksForCategory;
+
+    public CategoryEntity(String categoryType, List<BookEntity> booksForCategory) {
+        this.categoryType = categoryType;
+        this.booksForCategory = booksForCategory;
+    }
+
+    public CategoryEntity(String categoryType) {
+        this.categoryType = categoryType;
+    }
+
+    public CategoryEntity(int id, String categoryType) {
+        this.id = id;
+        this.categoryType = categoryType;
+    }
 }

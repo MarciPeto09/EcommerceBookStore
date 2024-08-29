@@ -1,6 +1,7 @@
 package org.example.category;
 
 import org.example.book.BookEntity;
+import org.example.utilities.DbConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,13 +11,9 @@ import java.util.UUID;
 
 public class CategoryRepository {
 
-    private SessionFactory sessionFactory;
-
-    public CategoryRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     public void addCategory(CategoryEntity category) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -32,7 +29,8 @@ public class CategoryRepository {
     }
 
 
-    public void removeCategory(UUID id) {
+    public void removeCategory(int id) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -50,7 +48,8 @@ public class CategoryRepository {
     }
 
 
-    public CategoryEntity findById(UUID id) {
+    public CategoryEntity findById(int id) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         CategoryEntity category = null;
         try (Session session = sessionFactory.openSession()) {
             category = session.createQuery("Select s From CategoryEntity s  where id = :id", CategoryEntity.class)
@@ -64,6 +63,7 @@ public class CategoryRepository {
 
 
     public List<CategoryEntity> findAll() {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         List<CategoryEntity> list = null;
         try (Session session = sessionFactory.openSession()) {
             list = session.createQuery("Select s From CategoryEntity s", CategoryEntity.class)
@@ -74,7 +74,8 @@ public class CategoryRepository {
         return list;
     }
 
-    public void upDate(UUID id, CategoryEntity category) {
+    public void upDate(int id, CategoryEntity category) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         CategoryEntity existingCategory = null;
         try (Session session = sessionFactory.openSession()) {

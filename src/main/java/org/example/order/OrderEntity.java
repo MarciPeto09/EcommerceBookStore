@@ -14,14 +14,15 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"book", "user"})
+//@ToString(exclude = {"book", "user","author","category","author_book"})
+@ToString
 @Entity
 @Table(name = "orders")
 public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private int id;
 
     private LocalDate data;
 
@@ -29,10 +30,18 @@ public class OrderEntity {
 
     private String status;
 
+
+
+    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+
+
+    @ToString.Exclude
     @OneToMany(mappedBy = "order")
     private List<BookEntity> books;
+
+
 }

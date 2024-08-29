@@ -1,5 +1,6 @@
 package org.example.author;
 
+import org.example.utilities.DbConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,13 +10,9 @@ import java.util.*;
 
 public class AuthorRepository {
 
-    private SessionFactory sessionFactory;
-
-    public AuthorRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     public void addAuthor(AuthorEntity author) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -30,7 +27,8 @@ public class AuthorRepository {
         }
     }
 
-    public void removeAuthor(UUID id) {
+    public void removeAuthor(int id) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -48,7 +46,8 @@ public class AuthorRepository {
         }
     }
 
-    public AuthorEntity findById(UUID id) {
+    public AuthorEntity findById(int id) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         AuthorEntity author = null;
         try (Session session = sessionFactory.openSession()) {
             author = session.createQuery("Select s From AuthorEntity s where id = :id", AuthorEntity.class)
@@ -63,6 +62,7 @@ public class AuthorRepository {
 
 
     public List<AuthorEntity> findAll() {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         try (Session session = sessionFactory.openSession()) {
             List<AuthorEntity> list = session.createQuery("Select s From AuthorEntity s", AuthorEntity.class)
                     .getResultList();
@@ -75,7 +75,8 @@ public class AuthorRepository {
 
     }
 
-    public void updateAuthor(UUID id, AuthorEntity updatedAuthor) {
+    public void updateAuthor(int id, AuthorEntity updatedAuthor) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
