@@ -52,9 +52,13 @@ public class UserRepository {
         SessionFactory sessionFactory = DbConnection.getFactory();
         UserEntity user = null;
         try (Session session = sessionFactory.openSession()) {
-            user = session.createQuery("Select u From UserEntity u  where u.name = :name", UserEntity.class)
+            List<UserEntity>  users = session.createQuery("Select u From UserEntity u  where u.name = :name", UserEntity.class)
                     .setParameter("name", name)
-                    .getSingleResult();
+                    .getResultList();
+
+            if (!users.isEmpty()) {
+                user = users.get(0);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,10 +69,10 @@ public class UserRepository {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Boolean exist = false;
         try (Session session = sessionFactory.openSession()) {
-            UserEntity user = session.createQuery("Select u From UserEntity u where u.name = :name", UserEntity.class)
+            List<UserEntity> user = session.createQuery("Select u From UserEntity u where u.name = :name", UserEntity.class)
                     .setParameter("name", name)
-                    .getSingleResult();
-            exist = (user != null);
+                    .getResultList();
+            exist = !user.isEmpty();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,10 +85,10 @@ public class UserRepository {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Boolean exist = false;
         try (Session session = sessionFactory.openSession()) {
-            UserEntity user = session.createQuery("Select u From UserEntity u where u.password =:password", UserEntity.class)
+            List<UserEntity> user = session.createQuery("Select u From UserEntity u where u.password =:password", UserEntity.class)
                     .setParameter("password", password)
-                    .getSingleResult();
-            exist = (user != null);
+                    .getResultList();
+            exist = !user.isEmpty();
         } catch (Exception e) {
             e.printStackTrace();
         }

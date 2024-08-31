@@ -12,27 +12,32 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public void addBook(BookEntity book){
+    public void addBook(BookEntity book) {
         bookRepository.addBook(book);
     }
 
-    public void removeBook(int id){
+    public void removeBook(int id) {
         bookRepository.removeBook(id);
     }
 
-    public BookEntity findById(int id){
+    public BookEntity findById(int id) {
         return bookRepository.findById(id);
     }
 
-    public BookEntity findByName(String name){
+    public BookEntity findByName(String name) {
         return bookRepository.findByName(name);
     }
 
-    public List<BookEntity> findAll(){
+    public List<BookEntity> findAll() {
         return bookRepository.findAll();
     }
 
-    public void upDate(int id, BookEntity book){
+
+    public List<BookEntity> bookXauthor(int id) {
+        return bookRepository.bookXauthor(id);
+    }
+
+    public void upDate(int id, BookEntity book) {
         bookRepository.updateBook(id, book);
     }
 }

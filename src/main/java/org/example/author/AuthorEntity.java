@@ -44,4 +44,28 @@ public class AuthorEntity {
         this.birthday = birthday;
         this.listOfBookXAuthor = listOfBookXAuthor;
     }
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("AuthorEntity {\n")
+                .append("    id: ").append(id).append(",\n")
+                .append("    name: '").append(name).append("',\n")
+                .append("    surname: '").append(surname).append("',\n")
+                .append("    nationality: ").append(nationality).append(",\n")
+                .append("    birthday: ").append(birthday).append(",\n")
+                .append("    listOfBookXAuthor: [\n");
+
+        if (listOfBookXAuthor != null) {
+            for (BookEntity book : listOfBookXAuthor) {
+                sb.append("        ").append(book.toString()).append(",\n");
+            }
+        }
+
+        sb.append("    ]\n")
+                .append("}");
+
+        return sb.toString();
+    }
 }

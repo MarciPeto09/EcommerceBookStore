@@ -5,6 +5,7 @@ import org.example.utilities.DbConnection;
 import org.hibernate.*;
 import org.hibernate.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,14 +63,34 @@ public class BookRepository {
         SessionFactory sessionFactory = DbConnection.getFactory();
         BookEntity book = null;
         try(Session session = sessionFactory.openSession()){
-            book = session.createQuery("Select s From BookEntity s where s.title =:title", BookEntity.class)
-                    .setParameter("title", title.trim() )
+            book = session.createQuery("SELECT s FROM BookEntity s WHERE LOWER(TRIM(s.title)) = :title", BookEntity.class)
+                    .setParameter("title", title.trim().toLowerCase())
                     .getSingleResult();
 
         }catch(Exception e ){
             e.printStackTrace();
         }
         return book;
+    }
+
+
+
+
+
+    public List<BookEntity> bookXauthor(int authorId) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
+        List<BookEntity> list = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            list = session.createQuery(
+                            "SELECT b FROM BookEntity b JOIN b.listOfAuthorsXBook a WHERE a.id = :authorId",
+                            BookEntity.class
+                    )
+                    .setParameter("authorId", authorId)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
 

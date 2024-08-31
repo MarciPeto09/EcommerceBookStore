@@ -4,6 +4,7 @@ import org.example.order.OrderEntity;
 import org.example.order.OrderRepository;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.UUID;
 
 public class UserService {
@@ -13,9 +14,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+
     public void addUser(UserEntity user){
         userRepository.addUser(user);
     }
+
 
     public void removeOrder(int id){
         userRepository.removeUser(id);
@@ -29,6 +32,40 @@ public class UserService {
         return userRepository.findByName(name);
     }
 
+    public UserEntity addUserAuthentication(){
+
+        UserService userService = new UserService(new UserRepository());
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Put your user name:");
+        String userName = scanner.next();;
+
+        UserEntity user = null;
+
+        if (userService.findByName(userName)) {
+
+            int passAttemps = 3;
+            boolean values = false;
+            while (passAttemps > 0 && values == false) {
+
+                System.out.println("Put your password:");
+                String password = scanner.next();
+
+                if (userService.findByPassword(password)) {
+                    values = true;
+                    user = userService.findByNameObject(userName);
+                } else {
+                    passAttemps -= 1;
+                    if (passAttemps == 0) {
+                        System.out.println("You Exited!!");
+                        break;
+                    }
+
+                }
+            }
+        }
+        return user;
+    }
     public Boolean findByPassword(String password){
         return userRepository.findByPassword(password);
     }

@@ -21,7 +21,7 @@ public class CategoryEntity {
 
     private String categoryType;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<BookEntity> booksForCategory;
 
     public CategoryEntity(String categoryType, List<BookEntity> booksForCategory) {
@@ -36,5 +36,26 @@ public class CategoryEntity {
     public CategoryEntity(int id, String categoryType) {
         this.id = id;
         this.categoryType = categoryType;
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("CategoryEntity {\n")
+                .append("    id: ").append(id).append(",\n")
+                .append("    categoryType: '").append(categoryType).append("',\n")
+                .append("    booksForCategory: [\n");
+
+        if (booksForCategory != null) {
+            for (BookEntity book : booksForCategory) {
+                sb.append("        ").append(book.toString()).append(",\n");
+            }
+        }
+
+        sb.append("    ]\n")
+                .append("}");
+
+        return sb.toString();
     }
 }
