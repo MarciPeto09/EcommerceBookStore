@@ -46,19 +46,21 @@ public class UserService {
 
             int passAttemps = 3;
             boolean values = false;
+            System.out.println("Put your password:");
             while (passAttemps > 0 && values == false) {
-
-                System.out.println("Put your password:");
                 String password = scanner.next();
 
                 if (userService.findByPassword(password)) {
                     values = true;
                     user = userService.findByNameObject(userName);
                 } else {
+
                     passAttemps -= 1;
                     if (passAttemps == 0) {
                         System.out.println("You Exited!!");
                         break;
+                    }else{
+                        System.out.println("Try again!");
                     }
 
                 }

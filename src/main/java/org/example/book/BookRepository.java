@@ -1,5 +1,6 @@
 package org.example.book;
 
+import jakarta.persistence.NoResultException;
 import org.example.InterfaceRepository;
 import org.example.author.AuthorEntity;
 import org.example.utilities.DbConnection;
@@ -71,6 +72,8 @@ public class BookRepository implements InterfaceRepository<BookEntity> {
                     .setParameter("title", title.trim().toLowerCase())
                     .getSingleResult();
 
+        }catch (NoResultException e) {
+            System.out.println("This book does not exist!");
         }catch(Exception e ){
             e.printStackTrace();
         }

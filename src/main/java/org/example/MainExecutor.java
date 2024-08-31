@@ -51,8 +51,7 @@ public class MainExecutor {
                     break;
 
                 case 2:
-                    System.out.println("This is the list of Authors: " + authorService.findAll()
-                            + "\nChoose the author you want to see the books from by ID:");
+                    System.out.println("This is the list of Authors: " + authorService.findAll());
                     getBack = getBackMethod(scanner);
                     break;
 

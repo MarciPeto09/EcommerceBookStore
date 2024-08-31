@@ -38,6 +38,6 @@ public class BookService {
     }
 
     public void upDate(int id, BookEntity book) {
-        bookRepository.updateBook(id, book);
+        bookRepository.update(id, book);
     }
 }
