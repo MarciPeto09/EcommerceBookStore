@@ -1,17 +1,20 @@
 package org.example.order;
 
-import org.example.category.CategoryEntity;
+import org.example.InterfaceRepository;
+import org.example.user.UserEntity;
 import org.example.utilities.DbConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-public class OrderRepository {
+public class OrderRepository implements InterfaceRepository<OrderEntity> {
 
-    public void addOrder(OrderEntity order) {
+
+    @Override
+    public void add(OrderEntity order) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -27,8 +30,8 @@ public class OrderRepository {
 
     }
 
-
-    public void removeOrder(int id) {
+    @Override
+    public void remove(int id) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -36,7 +39,7 @@ public class OrderRepository {
             OrderEntity order = session.createQuery("Select s From OrderEntity s where id = :id", OrderEntity.class)
                     .setParameter("id", id)
                     .getSingleResult();
-            session.delete(order);
+            session.remove(order);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -46,7 +49,7 @@ public class OrderRepository {
         }
     }
 
-
+    @Override
     public OrderEntity findById(int id) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         OrderEntity order = null;
@@ -60,12 +63,12 @@ public class OrderRepository {
         return order;
     }
 
-
+    @Override
     public List<OrderEntity> findAll() {
         SessionFactory sessionFactory = DbConnection.getFactory();
         List<OrderEntity> list = null;
         try (Session session = sessionFactory.openSession()) {
-            list = session.createQuery("Select s From CategoryEntity s", OrderEntity.class)
+            list = session.createQuery("Select s From OrderEntity s", OrderEntity.class)
                     .getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +76,21 @@ public class OrderRepository {
         return list;
     }
 
-    public void upDate(int id, OrderEntity order) {
+    public List<OrderEntity> orderOfUser(UserEntity user) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
+        List<OrderEntity> list = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            list = session.createQuery("select o from OrderEntity o where o.user.id = :userId", OrderEntity.class)
+                    .setParameter("userId", user.getId())
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public void update(int id, OrderEntity order) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         OrderEntity existingOrder = null;

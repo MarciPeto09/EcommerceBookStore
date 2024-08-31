@@ -21,7 +21,7 @@ public class CategoryEntity {
 
     private String categoryType;
 
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<BookEntity> booksForCategory;
 
     public CategoryEntity(String categoryType, List<BookEntity> booksForCategory) {
@@ -42,10 +42,9 @@ public class CategoryEntity {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("CategoryEntity {\n")
+        sb.append(categoryType)
                 .append("    id: ").append(id).append(",\n")
-                .append("    categoryType: '").append(categoryType).append("',\n")
-                .append("    booksForCategory: [\n");
+                .append("    books: [\n");
 
         if (booksForCategory != null) {
             for (BookEntity book : booksForCategory) {

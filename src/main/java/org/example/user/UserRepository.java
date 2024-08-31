@@ -1,18 +1,20 @@
 package org.example.user;
 
+import org.example.InterfaceRepository;
 import org.example.order.OrderEntity;
 import org.example.utilities.DbConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class UserRepository {
+public class UserRepository implements InterfaceRepository<UserEntity> {
 
-
-    public void addUser(UserEntity user) {
+    @Override
+    public void add(UserEntity user) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -28,8 +30,8 @@ public class UserRepository {
 
     }
 
-
-    public void removeUser(int id) {
+    @Override
+    public void remove(int id) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -65,6 +67,7 @@ public class UserRepository {
         return user;
     }
 
+
     public Boolean findByName(String name) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Boolean exist = false;
@@ -77,6 +80,20 @@ public class UserRepository {
             e.printStackTrace();
         }
         return exist;
+    }
+
+    @Override
+    public UserEntity findById(int id) {
+        SessionFactory sessionFactory = DbConnection.getFactory();
+        List<UserEntity> user = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            user = session.createQuery("Select u From UserEntity u where u.id = :id", UserEntity.class)
+                    .setParameter("id", id)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user.get(0);
     }
 
 
@@ -95,7 +112,7 @@ public class UserRepository {
         return exist;
     }
 
-
+    @Override
     public List<UserEntity> findAll() {
         SessionFactory sessionFactory = DbConnection.getFactory();
         List<UserEntity> list = null;
@@ -108,7 +125,8 @@ public class UserRepository {
         return list;
     }
 
-    public void upDate(int id, UserEntity user) {
+    @Override
+    public void update(int id, UserEntity user) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         UserEntity existinguser = null;

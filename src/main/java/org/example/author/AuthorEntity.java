@@ -3,6 +3,7 @@ package org.example.author;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.InterfaceRepository;
 import org.example.book.BookEntity;
 
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @ToString(exclude = {"book", "user","orders","category","author_book"})
 @Entity
 @Table(name = "author")
-public class AuthorEntity {
+public class AuthorEntity  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -29,7 +30,7 @@ public class AuthorEntity {
 
     private LocalDate birthday;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany( fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "author_book",
             joinColumns = @JoinColumn(name = "author_id"),
@@ -49,10 +50,8 @@ public class AuthorEntity {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("AuthorEntity {\n")
+        sb.append(name + " " + surname)
                 .append("    id: ").append(id).append(",\n")
-                .append("    name: '").append(name).append("',\n")
-                .append("    surname: '").append(surname).append("',\n")
                 .append("    nationality: ").append(nationality).append(",\n")
                 .append("    birthday: ").append(birthday).append(",\n")
                 .append("    listOfBookXAuthor: [\n");

@@ -1,7 +1,6 @@
 package org.example.category;
 
 import java.util.List;
-import java.util.UUID;
 
 public class CategoryService {
 
@@ -12,11 +11,11 @@ public class CategoryService {
     }
 
     public void addCategory(CategoryEntity category){
-        categoryRepository.addCategory(category);
+        categoryRepository.add(category);
     }
 
     public void removeCategory(int id){
-        categoryRepository.removeCategory(id);
+        categoryRepository.remove(id);
     }
 
     public CategoryEntity findById(int id){
@@ -28,6 +27,6 @@ public class CategoryService {
     }
 
     public void upDate(int id, CategoryEntity category){
-         categoryRepository.upDate(id, category);
+         categoryRepository.update(id, category);
     }
 }

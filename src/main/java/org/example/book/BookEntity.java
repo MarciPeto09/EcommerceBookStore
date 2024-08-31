@@ -27,19 +27,20 @@ public class BookEntity {
     private double price;
 
     @ToString.Exclude
-    @ManyToMany(mappedBy = "listOfBookXAuthor",cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    @ManyToMany(mappedBy = "listOfBookXAuthor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<AuthorEntity> listOfAuthorsXBook;
 
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book")
     private OrderEntity order;
+
 
     public BookEntity(String title, double price, List<AuthorEntity> listOfAuthorsXBook, CategoryEntity category, OrderEntity order) {
         this.title = title;
@@ -50,4 +51,12 @@ public class BookEntity {
     }
 
 
+    @Override
+    public String toString() {
+        return title +
+                "  id=" + id +
+                ", price=" + price +
+                '}';
+
+    }
 }

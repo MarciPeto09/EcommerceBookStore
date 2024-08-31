@@ -16,12 +16,12 @@ public class UserService {
 
 
     public void addUser(UserEntity user){
-        userRepository.addUser(user);
+        userRepository.add(user);
     }
 
 
     public void removeOrder(int id){
-        userRepository.removeUser(id);
+        userRepository.remove(id);
     }
 
     public UserEntity findByNameObject(String name){
@@ -75,6 +75,6 @@ public class UserService {
     }
 
     public void upDate(int id, UserEntity user){
-        userRepository.upDate(id, user);
+        userRepository.update(id, user);
     }
 }

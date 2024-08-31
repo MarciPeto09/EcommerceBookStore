@@ -49,7 +49,30 @@ public class MainDbFillData {
         AuthorEntity author18 = new AuthorEntity("Margaret", "Atwood", AuthorNationality.Else, LocalDate.of(1939, 11, 18), null);
         AuthorEntity author19 = new AuthorEntity("Pablo", "Neruda", AuthorNationality.Else, LocalDate.of(1904, 7, 12), null);
         AuthorEntity author20 = new AuthorEntity("Albert", "Camus", AuthorNationality.French, LocalDate.of(1913, 11, 7), null);
-//
+
+        //Mbushja e tabeles author me te dhena
+        AuthorService authorService = new AuthorService(new AuthorRepository());
+        authorService.addAuthor(author1);
+        authorService.addAuthor(author2);
+        authorService.addAuthor(author3);
+        authorService.addAuthor(author4);
+        authorService.addAuthor(author5);
+        authorService.addAuthor(author6);
+        authorService.addAuthor(author7);
+        authorService.addAuthor(author8);
+        authorService.addAuthor(author9);
+        authorService.addAuthor(author10);
+        authorService.addAuthor(author11);
+        authorService.addAuthor(author12);
+        authorService.addAuthor(author13);
+        authorService.addAuthor(author14);
+        authorService.addAuthor(author15);
+        authorService.addAuthor(author16);
+        authorService.addAuthor(author17);
+        authorService.addAuthor(author18);
+        authorService.addAuthor(author19);
+        authorService.addAuthor(author20);
+
 //        //Krijimi i objeckteve Category
         CategoryEntity fiction = new CategoryEntity("Fiction");
         CategoryEntity drama = new CategoryEntity("Drama");
@@ -213,52 +236,30 @@ public class MainDbFillData {
         book20.setListOfAuthorsXBook(Arrays.asList(author20));
 
 
-//        //Mbushja e tabeles author me te dhena
-        AuthorService authorService = new AuthorService(new AuthorRepository());
-        authorService.addAuthor(author1);
-        authorService.addAuthor(author2);
-        authorService.addAuthor(author3);
-        authorService.addAuthor(author4);
-        authorService.addAuthor(author5);
-        authorService.addAuthor(author6);
-        authorService.addAuthor(author7);
-        authorService.addAuthor(author8);
-        authorService.addAuthor(author9);
-        authorService.addAuthor(author10);
-        authorService.addAuthor(author11);
-        authorService.addAuthor(author12);
-        authorService.addAuthor(author13);
-        authorService.addAuthor(author14);
-        authorService.addAuthor(author15);
-        authorService.addAuthor(author16);
-        authorService.addAuthor(author17);
-        authorService.addAuthor(author18);
-        authorService.addAuthor(author19);
-        authorService.addAuthor(author20);
 
 
 //        //Mbushja e tabeles book me te dhena
         BookService bookService = new BookService(new BookRepository());
-////        bookService.addBook(book1);
-////        bookService.addBook(book2);
-////        bookService.addBook(book3);
-////        bookService.addBook(book4);
-////        bookService.addBook(book5);
-////        bookService.addBook(book6);
-////        bookService.addBook(book7);
-////        bookService.addBook(book8);
-////        bookService.addBook(book9);
-////        bookService.addBook(book10);
-////        bookService.addBook(book11);
-////        bookService.addBook(book12);
-////        bookService.addBook(book13);
-////        bookService.addBook(book14);
-////        bookService.addBook(book15);
-////        bookService.addBook(book16);
-////        bookService.addBook(book17);
-////        bookService.addBook(book18);
-////        bookService.addBook(book19);
-////        bookService.addBook(book20);
+        bookService.addBook(book1);
+        bookService.addBook(book2);
+        bookService.addBook(book3);
+        bookService.addBook(book4);
+        bookService.addBook(book5);
+        bookService.addBook(book6);
+        bookService.addBook(book7);
+        bookService.addBook(book8);
+        bookService.addBook(book9);
+        bookService.addBook(book10);
+        bookService.addBook(book11);
+        bookService.addBook(book12);
+        bookService.addBook(book13);
+        bookService.addBook(book14);
+        bookService.addBook(book15);
+        bookService.addBook(book16);
+        bookService.addBook(book17);
+        bookService.addBook(book18);
+        bookService.addBook(book19);
+        bookService.addBook(book20);
 
 
 

@@ -1,5 +1,6 @@
 package org.example.author;
 
+import org.example.InterfaceRepository;
 import org.example.utilities.DbConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,10 +9,10 @@ import org.hibernate.Transaction;
 import java.lang.reflect.Executable;
 import java.util.*;
 
-public class AuthorRepository {
+public class AuthorRepository implements InterfaceRepository<AuthorEntity> {
 
-
-    public void addAuthor(AuthorEntity author) {
+    @Override
+    public void add(AuthorEntity author) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -27,7 +28,9 @@ public class AuthorRepository {
         }
     }
 
-    public void removeAuthor(int id) {
+
+    @Override
+    public void remove(int id) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -46,6 +49,7 @@ public class AuthorRepository {
         }
     }
 
+    @Override
     public AuthorEntity findById(int id) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         AuthorEntity author = null;
@@ -61,6 +65,7 @@ public class AuthorRepository {
     }
 
 
+    @Override
     public List<AuthorEntity> findAll() {
         SessionFactory sessionFactory = DbConnection.getFactory();
         try (Session session = sessionFactory.openSession()) {
@@ -75,7 +80,9 @@ public class AuthorRepository {
 
     }
 
-    public void updateAuthor(int id, AuthorEntity updatedAuthor) {
+
+    @Override
+    public void update(int id, AuthorEntity updatedAuthor) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -101,4 +108,6 @@ public class AuthorRepository {
             throw e;
         }
     }
+
+
 }

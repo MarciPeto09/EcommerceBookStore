@@ -32,7 +32,7 @@ public class UserEntity {
     private LocalDate dateOfRegistration;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<OrderEntity> orders;
 
 

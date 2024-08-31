@@ -3,18 +3,14 @@ package org.example.order;
 import org.example.book.BookEntity;
 import org.example.book.BookRepository;
 import org.example.book.BookService;
-import org.example.category.CategoryEntity;
-import org.example.category.CategoryRepository;
 import org.example.user.UserEntity;
 import org.example.user.UserRepository;
 import org.example.user.UserService;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.UUID;
 
 public class OrderService {
     private OrderRepository orderRepository;
@@ -23,7 +19,7 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public void addOrder() {
+    public void addOrder( UserEntity user) {
         Scanner scanner = new Scanner(System.in);
         UserService userService = new UserService(new UserRepository());
         BookService bookService = new BookService(new BookRepository());
@@ -31,8 +27,6 @@ public class OrderService {
         OrderEntity order = new OrderEntity();
         order.setData(LocalDate.now());
         order.setStatus("Aktive");
-
-        UserEntity user = userService.addUserAuthentication();
         order.setUser(user);
 
         if (user != null) {
@@ -67,9 +61,9 @@ public class OrderService {
             order.setAdress(scanner.next());
 //
             //Ruajtja e order ne database
-            orderRepository.addOrder(order);
+            orderRepository.add(order);
 
-            System.out.println("Your order is ready:" + order + "\nIt will be delivered after 7 days: " + LocalDate.now().plusDays(7) + "The TOTAL: " + orderTotal + "Leke");
+            System.out.println("Your order is ready:" + order + "\nIt will be delivered after 7 days: " + LocalDate.now().plusDays(7) + "\nThe TOTAL: " + orderTotal + " Leke");
 
 
         }
@@ -77,7 +71,7 @@ public class OrderService {
 
     }
     public void removeOrder(int id){
-        orderRepository.removeOrder(id);
+        orderRepository.remove(id);
     }
 
     public OrderEntity findById(int id){
@@ -89,6 +83,10 @@ public class OrderService {
     }
 
     public void upDate(int id, OrderEntity order){
-        orderRepository.upDate(id, order);
+        orderRepository.update(id, order);
+    }
+
+    public List<OrderEntity> orderOfUser(UserEntity user){
+        return orderRepository.orderOfUser(user);
     }
 }

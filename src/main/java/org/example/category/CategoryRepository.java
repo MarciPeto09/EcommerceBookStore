@@ -1,18 +1,17 @@
 package org.example.category;
 
-import org.example.book.BookEntity;
+import org.example.InterfaceRepository;
 import org.example.utilities.DbConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.List;
-import java.util.UUID;
 
-public class CategoryRepository {
+public class CategoryRepository implements InterfaceRepository<CategoryEntity> {
 
-
-    public void addCategory(CategoryEntity category) {
+    @Override
+    public void add(CategoryEntity category) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -28,8 +27,8 @@ public class CategoryRepository {
 
     }
 
-
-    public void removeCategory(int id) {
+    @Override
+    public void remove(int id) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -47,7 +46,7 @@ public class CategoryRepository {
         }
     }
 
-
+    @Override
     public CategoryEntity findById(int id) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         CategoryEntity category = null;
@@ -61,7 +60,7 @@ public class CategoryRepository {
         return category;
     }
 
-
+    @Override
     public List<CategoryEntity> findAll() {
         SessionFactory sessionFactory = DbConnection.getFactory();
         List<CategoryEntity> list = null;
@@ -73,8 +72,8 @@ public class CategoryRepository {
         }
         return list;
     }
-
-    public void upDate(int id, CategoryEntity category) {
+    @Override
+    public void update(int id, CategoryEntity category) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         CategoryEntity existingCategory = null;

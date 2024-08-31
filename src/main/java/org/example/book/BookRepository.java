@@ -1,17 +1,20 @@
 package org.example.book;
 
+import org.example.InterfaceRepository;
 import org.example.author.AuthorEntity;
 import org.example.utilities.DbConnection;
 import org.hibernate.*;
 import org.hibernate.Transaction;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class BookRepository {
+public class BookRepository implements InterfaceRepository<BookEntity> {
 
-    public void addBook(BookEntity book){
+    @Override
+    public void add(BookEntity book){
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try(Session session = sessionFactory.openSession()){
@@ -25,8 +28,8 @@ public class BookRepository {
             e.printStackTrace();
         }
     }
-
-    public void removeBook(int id) {
+    @Override
+    public void remove(int id) {
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -44,6 +47,7 @@ public class BookRepository {
         }
     }
 
+    @Override
     public BookEntity findById(int id){
         SessionFactory sessionFactory = DbConnection.getFactory();
         BookEntity book = null;
@@ -93,7 +97,7 @@ public class BookRepository {
         return list;
     }
 
-
+    @Override
     public List<BookEntity> findAll(){
         SessionFactory sessionFactory = DbConnection.getFactory();
         List<BookEntity> lista = null;
@@ -106,8 +110,8 @@ public class BookRepository {
         return lista;
     }
 
-
-    public void updateBook(int id,BookEntity book){
+    @Override
+    public void update(int id,BookEntity book){
         SessionFactory sessionFactory = DbConnection.getFactory();
         Transaction transaction = null;
         BookEntity existingBook = null;

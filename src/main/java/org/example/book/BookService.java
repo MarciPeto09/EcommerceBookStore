@@ -13,11 +13,11 @@ public class BookService {
     }
 
     public void addBook(BookEntity book) {
-        bookRepository.addBook(book);
+        bookRepository.add(book);
     }
 
     public void removeBook(int id) {
-        bookRepository.removeBook(id);
+        bookRepository.remove(id);
     }
 
     public BookEntity findById(int id) {
